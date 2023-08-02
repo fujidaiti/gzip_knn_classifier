@@ -1,0 +1,13 @@
+name: knn_gzip_classifier
+description: A lightweight text classifier bilt on k-nearest-neighbor (kNN) algorithm and a simple compressor like gzip.
+version: 0.1.0
+repository: https://github.com/fujidaiti/knn_gzip_classifier.git
+
+environment:
+  sdk: ^3.0.6
+
+dependencies:
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0

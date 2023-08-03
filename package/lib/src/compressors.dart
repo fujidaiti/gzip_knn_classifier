@@ -1,16 +1,16 @@
-import 'dart:convert';
 import 'dart:io' as io;
 
 abstract class Compressor {
-  String compress(String text);
+  int compressedLength(String text);
 }
 
 class Gzip implements Compressor {
-  final Map<String, String> _cache = {};
+  const Gzip();
 
   @override
-  String compress(String text) {
-    _cache[text] ??= base64.encode(io.gzip.encode(text.codeUnits));
-    return _cache[text]!;
+  int compressedLength(String text) {
+    // _cache[text] ??= io.gzip.encode(text.codeUnits);
+    // return _cache[text]!;
+    return io.gzip.encode(text.codeUnits).length;
   }
 }

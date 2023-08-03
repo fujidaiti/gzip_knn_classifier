@@ -40,9 +40,9 @@ class KnnGzipClassifier<T> {
   @visibleForTesting
   double computeNCD(String x, String y) {
     assert(x.isNotEmpty && y.isNotEmpty);
-    final xCmp = compressor.compress(x).length;
-    final yCmp = compressor.compress(y).length;
-    final xyCmp = compressor.compress('$x $y').length;
+    final xCmp = compressor.compressedLength(x);
+    final yCmp = compressor.compressedLength(y);
+    final xyCmp = compressor.compressedLength('$x $y');
     return (xyCmp - min(xCmp, yCmp)) / max(xCmp, yCmp);
   }
 }

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:knn_gzip_classifier/src/compressors.dart';
 import 'package:meta/meta.dart';
 
-typedef TrainData = ({String text, String label});
+typedef TrainDataset = List<({String text, String label})>;
 typedef PredictionResult = List<({String label, double metric})>;
 
 class KnnGzipClassifier<T> {
@@ -17,7 +17,7 @@ class KnnGzipClassifier<T> {
         assert(k > 0);
 
   final int k;
-  final List<TrainData> trainDataset;
+  final TrainDataset trainDataset;
   final Compressor compressor;
   final Reducer<T> reducer;
 

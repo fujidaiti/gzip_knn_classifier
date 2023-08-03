@@ -23,11 +23,11 @@ class KnnGzipClassifier<T> {
 
   T predict(String test) {
     assert(test.isNotEmpty);
-    return reducer.reduce(predictLabels(test));
+    return reducer.reduce(findNearestNeighbors(test));
   }
 
   @visibleForTesting
-  PredictionResult predictLabels(String test) {
+  PredictionResult findNearestNeighbors(String test) {
     final sortedTrainData = trainDataset.map((train) {
       final ncd = computeNCD(test, train.text);
       return (label: train.label, metric: ncd);
@@ -42,7 +42,7 @@ class KnnGzipClassifier<T> {
     assert(x.isNotEmpty && y.isNotEmpty);
     final xCmp = compressor.compress(x).length;
     final yCmp = compressor.compress(y).length;
-    final xyCmp = compressor.compress("$x $y").length;
+    final xyCmp = compressor.compress('$x $y').length;
     return (xyCmp - min(xCmp, yCmp)) / max(xCmp, yCmp);
   }
 }
@@ -56,6 +56,7 @@ class MajorityVoting implements Reducer<String> {
 
   @override
   String reduce(PredictionResult result) {
+    assert(result.isNotEmpty);
     final occurrence = <String, int>{};
     for (final (:label, metric: _) in result) {
       occurrence[label] = (occurrence[label] ?? 0) + 1;
